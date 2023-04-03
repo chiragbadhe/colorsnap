@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <SEO />
-      <main className={karla.className}>
+      <main className={`${karla.className} overflow-hidden`}>
         <Header />
         <Hero />
       </main>

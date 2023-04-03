@@ -87,44 +87,30 @@ export const hslToHex = (hsl: { h: any; s: number; l: number }) => {
   };
 
 
-export const generateColorShades = (baseColor: string): ColorShades => {
-  // Convert the base color to an RGB value
-  const hexToRgb = (hex: string): number[] => {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    return [r, g, b];
-  };
-
-  const rgbToHex = (rgb: number[]): string => {
-    const hex = rgb.map((color) => {
-      const hexColor = color.toString(16);
-      return hexColor.length === 1 ? `0${hexColor}` : hexColor;
-    });
-    return `#${hex.join('')}`;
-  };
-
-  const baseRgb = hexToRgb(baseColor);
-
-  // Calculate the difference between each shade
-  const difference = Math.floor(baseRgb[0] / 11);
-
-  // Generate 11 shades, from lightest to darkest
-  const shades: ColorShades = {
-    shade1: rgbToHex([baseRgb[0], baseRgb[1] - difference * 5, baseRgb[2] + difference * 5]),
-    shade2: rgbToHex([baseRgb[0], baseRgb[1] - difference * 4, baseRgb[2] + difference * 4]),
-    shade3: rgbToHex([baseRgb[0], baseRgb[1] - difference * 3, baseRgb[2] + difference * 3]),
-    shade4: rgbToHex([baseRgb[0], baseRgb[1] - difference * 2, baseRgb[2] + difference * 2]),
-    shade5: rgbToHex([baseRgb[0], baseRgb[1] - difference, baseRgb[2] + difference]),
-    shade6: baseColor,
-    shade7: rgbToHex([baseRgb[0] - difference, baseRgb[1] + difference, baseRgb[2] + difference]),
-    shade8: rgbToHex([baseRgb[0] - difference * 2, baseRgb[1] + difference * 2, baseRgb[2] + difference * 2]),
-    shade9: rgbToHex([baseRgb[0] - difference * 3, baseRgb[1] + difference * 3, baseRgb[2] + difference * 3]),
-    shade10: rgbToHex([baseRgb[0] - difference * 4, baseRgb[1] + difference * 4, baseRgb[2] + difference * 4]),
-    shade11: rgbToHex([baseRgb[0] - difference * 5, baseRgb[1] + difference * 5, baseRgb[2] + difference * 5]),
-  };
-
-  return shades;
-};
-
-
+  export function generateColorShades(hexCode: string): string[] {
+    const hexToInt = (hex: string) => parseInt(hex, 16);
+    const intToHex = (int: number) => int.toString(16).padStart(2, '0');
+    
+    // Convert the hex code to RGB values
+    const r = hexToInt(hexCode.slice(1, 3));
+    const g = hexToInt(hexCode.slice(3, 5));
+    const b = hexToInt(hexCode.slice(5, 7));
+    
+    // Calculate the increment for each shade based on linear interpolation
+    const incrementR = r / 11;
+    const incrementG = g / 11;
+    const incrementB = b / 11;
+    
+    // Generate the 11 shades using linear interpolation between white (#FFFFFF) and the specified hex code
+    const shades = [];
+    for (let i = 1; i <= 11; i++) {
+      const shadeR = Math.round(255 - (incrementR * i));
+      const shadeG = Math.round(255 - (incrementG * i));
+      const shadeB = Math.round(255 - (incrementB * i));
+      const shadeHex = `#${intToHex(shadeR)}${intToHex(shadeG)}${intToHex(shadeB)}`;
+      shades.push(shadeHex);
+    }
+    
+    return shades;
+  }
+  
