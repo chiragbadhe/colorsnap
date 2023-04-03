@@ -1,6 +1,10 @@
-import { generateColorShades,  hexToHSL, hslToHex } from "@/lib/utils";
+import { generateColorShades, hexToHSL, hslToHex } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
-
+import FollowCard from "./cards/FollowCard";
+import AppCard from "./cards/AppCard";
+import AtmCard from "./cards/AtmCard";
+import toast, { Toaster } from "react-hot-toast";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 type Props = {};
 
@@ -8,7 +12,6 @@ function Hero({}: Props) {
   const [color, setColor] = useState("#000000");
   const [hsl, setHSL] = useState({ h: 0, s: 0, l: 0 });
   const [shade, setShade] = useState(generateColorShades("000000"));
-
 
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newColor = e.target.value;
@@ -18,7 +21,7 @@ function Hero({}: Props) {
     const newShades = generateColorShades(newColor);
     setShade(newShades);
   };
-  
+
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === "color-text") {
       const newColor = e.target.value;
@@ -39,6 +42,7 @@ function Hero({}: Props) {
 
   return (
     <main className="container mx-auto border-l border-r border-black/10 min-h-screen">
+      <Toaster position="top-right" reverseOrder={false} />
       <section className="p-11 py-16 border-b">
         <div>
           <p className="font-bold text-4xl opacity-80">
@@ -133,7 +137,7 @@ function Hero({}: Props) {
         </div>
       </section>
 
-      <section className="px-11 py-5">
+      <section className="px-11 py-11 border-b">
         <div className="flex justify-between">
           <p>color name</p>
           <div className="flex">
@@ -146,18 +150,35 @@ function Hero({}: Props) {
             const hex = `${shadeValue}`;
 
             return (
-              <div
+              <CopyToClipboard
+                text={hex}
                 key={index}
-                style={{ backgroundColor: `${shadeValue}` }}
-                className="h-40 rounded-md flex justify-center items-end border"
+                onCopy={() =>
+                  toast(`${hex.toUpperCase()} copied to clipboard !`)
+                }
               >
-                <div className="flex flex-col items-center mb-4">
-                  <p className="text-md">{50 * index *2}</p>
-                  <p className="text-sm">{hex}</p>
+                <div
+                  key={index}
+                  style={{ backgroundColor: `${shadeValue}` }}
+                  className="h-40 rounded-md flex justify-center items-end border"
+                >
+                  <div className="flex flex-col items-center mb-4">
+                    <p className="text-md">{50 * index * 2}</p>
+                    <p className="text-sm">{hex}</p>
+                  </div>
                 </div>
-              </div>
+              </CopyToClipboard>
             );
           })}
+        </div>
+      </section>
+
+      <section className="py-11 px-11">
+        <div className="grid grid-cols-4 gap-5">
+          <div className="border rounded-[10px] h-[450px]"></div>
+          <div className="border rounded-[10px] h-[450px] col-span-2"></div>
+          {/* <div className="border rounded-[10px] h-[450px]"></div> */}
+          <div className="border rounded-[10px] h-[450px]"></div>
         </div>
       </section>
     </main>
