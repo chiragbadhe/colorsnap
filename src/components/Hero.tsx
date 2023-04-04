@@ -1,14 +1,16 @@
+/* eslint-disable @next/next/no-img-element */
 import { generateColorShades, hexToHSL, hslToHex } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
-import FollowCard from "./cards/FollowCard";
-import AppCard from "./cards/AppCard";
-import AtmCard from "./cards/AtmCard";
+import FollowCard from "./Cards/FollowCard";
+import AppCard from "./Cards/AppCard";
+import AtmCard from "./Cards/AtmCard";
 import toast, { Toaster } from "react-hot-toast";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Modal from "@/components/Modal";
-import Weather from "./cards/Weather";
+import Weather from "./Cards/Weather";
 
 import { Instagram, Dribbble, Facebook } from "lucide-react";
+import { useColorStore } from "@/lib/useColorStore";
 
 type Props = {};
 
@@ -18,6 +20,8 @@ function Hero({}: Props) {
   const [shade, setShade] = useState(generateColorShades("#3498a6"));
 
   const [isOpen, setIsOpen] = useState(false);
+
+  useColorStore((state) => ({ ...state, shade }));
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -162,7 +166,7 @@ function Hero({}: Props) {
 
       <section className="px-11 py-11 border-b">
         <div className="flex justify-between">
-          <p>color name</p>
+          <p>{shade.name.toLowerCase()}</p>
           <div className="flex">
             <button onClick={() => setIsOpen(true)}>export</button>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -170,7 +174,7 @@ function Hero({}: Props) {
         </div>
 
         <div className="flex justify-center grid sm:grid-cols-11 grid-rows-11 gap-3 mt-5">
-          {Object.values(shade).map((shadeValue, index) => {
+          {Object.values(shade.shades).map((shadeValue, index) => {
             const hex = `${shadeValue}`;
 
             return (
@@ -187,7 +191,9 @@ function Hero({}: Props) {
                   className="sm:h-40 rounded-md flex justify-center items-end border"
                 >
                   <div className="flex flex-col items-center mb-4">
-                    <p className="text-md">{50 * index * 2}</p>
+                    <p className="text-md">
+                      {index === 0 ? 50 : index === 10 ? 950 : 50 * index * 2}
+                    </p>
                     <p className="text-sm">{hex}</p>
                   </div>
                 </div>
@@ -244,7 +250,7 @@ function Hero({}: Props) {
           </div>
           {/* <div className="border rounded-[10px] h-[450px]"></div> */}
           <div className="border bg-cyan-300 bg-opacity-40 rounded-[10px] h-[450px] overflow-hidden">
-            <div  className=" flex items-center justify-center h-full flex flex-col space-y-[20px] ">
+            <div className=" flex items-center justify-center h-full flex flex-col space-y-[20px] ">
               <img
                 className="h-[150px] rounded-full"
                 src="https://www.nicesnippets.com/demo/following1.jpg"

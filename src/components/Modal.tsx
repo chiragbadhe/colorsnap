@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Tailwind from "./ModalTab/Tailwind";
 
 interface ModalProps {
   isOpen: boolean;
@@ -13,9 +14,9 @@ export default function Modal(props: ModalProps) {
     <>
       {/* Modal overlay */}
       {isOpen && (
-        <div className="fixed inset-0  backdrop-blur-sm bg-white/30  z-50 flex items-center justify-center">
+        <div className="fixed inset-0 backdrop-blur-sm bg-white/30  z-50 flex items-center justify-center">
           {/* Modal content */}
-          <div className="bg-gray-800 rounded-lg p-4 max-w-md w-full  backdrop-filter backdrop-blur-lg">
+          <div className="bg-gray-800 rounded-lg p-4 max-w-md w-full backdrop-filter backdrop-blur-lg">
             <button
               onClick={() => setIsOpen(false)}
               className="absolute top-2 right-2 text-gray-600 hover:text-gray-500 focus:outline-none"
@@ -36,11 +37,11 @@ export default function Modal(props: ModalProps) {
               </svg>
             </button>
             {/* Tab menu */}
-            <div className="flex justify-center mb-4">
+            <div className="flex mb-4 w-full">
               <button
                 className={`${
                   activeTab === "Tailwind" ? "bg-gray-700" : "bg-gray-600"
-                } text-white py-2 px-4 rounded-l-lg focus:outline-none`}
+                } text-white py-1 px-3  focus:outline-none`}
                 onClick={() => setActiveTab("Tailwind")}
               >
                 Tailwind
@@ -48,7 +49,7 @@ export default function Modal(props: ModalProps) {
               <button
                 className={`${
                   activeTab === "SCSS" ? "bg-gray-700" : "bg-gray-600"
-                } text-white py-2 px-4 rounded-r-lg focus:outline-none`}
+                } text-white py-1 px-3 focus:outline-none`}
                 onClick={() => setActiveTab("SCSS")}
               >
                 SCSS
@@ -59,7 +60,7 @@ export default function Modal(props: ModalProps) {
               {activeTab === "Tailwind" && (
                 <div>
                   <h2 className="text-lg font-bold mb-2">Tailwind</h2>
-                  <p>Tailwind content goes here</p>
+                  <Tailwind />
                 </div>
               )}
               {activeTab === "SCSS" && (

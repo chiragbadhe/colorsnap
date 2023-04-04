@@ -17,6 +17,7 @@
     "color-names": "^2.0.0",
     "eslint": "8.37.0",
     "eslint-config-next": "13.2.4",
+    "immer": "^9.0.21",
     "lucide-react": "^0.130.0",
     "next": "13.2.4",
     "react": "18.2.0",
@@ -24,7 +25,8 @@
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.0",
     "tinycolor2": "^1.6.0",
-    "typescript": "5.0.3"
+    "typescript": "5.0.3",
+    "zustand": "^4.3.7"
   },
   "devDependencies": {
     "@types/chroma-js": "^2.4.0",
