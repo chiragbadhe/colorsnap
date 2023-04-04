@@ -4,10 +4,15 @@ import React from "react";
 type Props = {};
 
 function AppCard({}: Props) {
-  const {  shades } = useColorStore();
+  const { shades } = useColorStore();
 
   return (
-    <div style={{backgroundColor: shades[300]}} className="border rounded-[10px] h-[450px] flex items-center justify-center flex-col px-5">
+    <div
+      style={{
+        backgroundImage: `linear-gradient(170deg, ${shades[600]}, ${shades[300]})`,
+      }}
+      className="border rounded-[10px] h-[450px] flex items-center justify-center flex-col px-5"
+    >
       <svg
         width="148"
         height="148"
@@ -42,13 +47,13 @@ function AppCard({}: Props) {
         </p>
       </div>
       <div className="mt-7">
-          <button
-            style={{ backgroundColor: shades[700] }}
-            className="px-[60px] text-white py-[7px] rounded-[6px] "
-          >
-            trade
-          </button>
-        </div>
+        <button
+          style={{ backgroundColor: shades[700] }}
+          className="px-[60px] text-white py-[7px] rounded-[6px] "
+        >
+          trade
+        </button>
+      </div>
     </div>
   );
 }

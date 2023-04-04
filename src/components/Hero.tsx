@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { hexToHSL, hslToHex } from "@/lib/utils";
+import { getPerceivedBrightness, hexToHSL, hslToHex } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -9,6 +9,7 @@ import { useColorStore } from "@/lib/useColorStore";
 import RightCard from "./Cards/RightCard";
 import LeftCard from "./Cards/leftCard";
 import CenterCard from "./Cards/CenterCard";
+import { Heart } from "lucide-react";
 
 type Props = {};
 
@@ -69,46 +70,48 @@ function Hero({}: Props) {
   };
 
   return (
-    <main className="container mx-auto border-l border-r border-black/10 min-h-screen">
+    <main className="container max-w-7xl mx-auto px-5 md:px-0 border-l border-r border-black/10 min-h-screen ">
       <Toaster position="top-right" reverseOrder={false} />
-      <section className="p-11 py-16 border-b">
+      <section className="sm:p-11 py-16   border-b">
         <div>
           <p className="font-bold text-4xl opacity-80">
             tailwind shade generator
           </p>
-          <p className="w-1/3 mt-3 opacity-60">
+          <p className="sm:w-1/3 mt-3 opacity-60">
             craft your own color palette: mix and match hexcodes, tweak HSL
             values, or press enter for a fresh color!
           </p>
         </div>
-        <div className="flex space-x-4 mt-4">
-          <div className="flex py-[12px]">
-            <div className="flex border px-3.5 py-2.5">
-              <input
-                className="focus:outline-none text-black/50 "
-                type="text"
-                id="color-text"
-                name="color-text"
-                value={color}
-                onChange={handleTextChange}
-              />
-            </div>
-            <div className="border flex items-center px-3.5">
-              <input
-                type="color"
-                id="color-picker"
-                name="color-picker"
-                value={color}
-                onChange={handleColorChange}
-                className="rounded-full appearance-none border-none bg-transparent"
-                style={{ padding: 0, width: "1.6rem", height: "1.6rem" }}
-              />
+        <div className="flex flex-col sm:flex-row sm:space-x-4 mt-4">
+          <div className="flex py-[12px] items-center justify-center">
+            <div className="flex w-full">
+              <div className="flex border px-3.5 py-2.5 w-full">
+                <input
+                  className="focus:outline-none text-black/50  "
+                  type="text"
+                  id="color-text"
+                  name="color-text"
+                  value={color}
+                  onChange={handleTextChange}
+                />
+              </div>
+              <div className="border flex items-center px-3.5">
+                <input
+                  type="color"
+                  id="color-picker"
+                  name="color-picker"
+                  value={color}
+                  onChange={handleColorChange}
+                  className="rounded-full appearance-none border-none bg-transparent"
+                  style={{ padding: 0, width: "1.6rem", height: "1.6rem" }}
+                />
+              </div>
             </div>
           </div>
 
-          <div className="flex py-[12px]">
-            <div className="flex border px-3.5 py-2.5 border-r text-black/50 ">
-              <form className="w-full flex">
+          <div className="flex sm:py-[12px] w-full">
+            <div className="flex border px-3.5 py-2.5 border-r text-black/50 w-1/3 sm:w-auto">
+              <form className=" flex">
                 <div className="flex space-x-3">
                   <p>H</p>
                   <input
@@ -125,7 +128,7 @@ function Hero({}: Props) {
                 </div>
               </form>
             </div>
-            <div className="flex border px-3.5 py-2.5 border-r">
+            <div className="flex border px-3.5 py-2.5 border-r  w-1/3 sm:w-auto">
               <form className="w-full flex">
                 <div className="flex space-x-3 text-black/50 ">
                   <p>S</p>
@@ -143,7 +146,7 @@ function Hero({}: Props) {
                 </div>
               </form>
             </div>
-            <div className="flex border px-3.5 py-2.5 text-black/50 ">
+            <div className="flex border px-3.5 py-2.5 text-black/50 w-1/3 sm:w-auto">
               <form className="w-full flex">
                 <div className="flex space-x-3">
                   <p>L</p>
@@ -165,7 +168,7 @@ function Hero({}: Props) {
         </div>
       </section>
 
-      <section className="px-11 py-11 border-b">
+      <section className="sm:px-11 py-11 border-b">
         <div className="flex justify-between">
           <p>{name.toLowerCase()}</p>
           <div className="flex">
@@ -174,9 +177,12 @@ function Hero({}: Props) {
           </div>
         </div>
 
-        <div className="flex justify-center grid sm:grid-cols-11 grid-rows-11 gap-3 mt-5">
+        <div className="flex flex-col justify-center sm:grid md:grid-cols-6 xl:grid-cols-11 grid-rows-11 gap-3 mt-5">
           {Object.values(shades).map((shadeValue, index) => {
             const hex = `${shadeValue}`;
+            const perceivedBrightness = getPerceivedBrightness(hex);
+            const textColor =
+              perceivedBrightness >= 128 ? "#000000" : "#FFFFFF";
 
             return (
               <CopyToClipboard
@@ -188,10 +194,13 @@ function Hero({}: Props) {
               >
                 <div
                   key={index}
-                  style={{ backgroundColor: `${shadeValue}` }}
+                  style={{
+                    backgroundColor: `${shadeValue}`,
+                    color: `${textColor}`,
+                  }}
                   className="sm:h-40 rounded-md flex justify-center items-end border"
                 >
-                  <div className="flex flex-col items-center mb-4">
+                  <div className="flex flex-col items-center my-2 sm:my-0 sm:mb-4">
                     <p className="text-md">
                       {index === 0 ? 50 : index === 10 ? 950 : 50 * index * 2}
                     </p>
@@ -204,15 +213,36 @@ function Hero({}: Props) {
         </div>
       </section>
 
-      <section className="py-11 px-11">
-        <div className="grid grid-cols-4 gap-5 ">
-          <LeftCard />
-          <div className="col-span-2 overflow-hidden rounded-[10px] border">
+      <section className="py-11 sm:px-11">
+        <div className="sm:grid grid-cols-4 gap-5 ">
+          <div className="hidden xl:block">
+            <LeftCard />
+          </div>
+          <div className="sm:block xl:col-span-2 md:col-span-4 md:h-[450px] overflow-hidden rounded-[10px] border">
             <CenterCard />
           </div>
-          <RightCard />
+          <div className="hidden xl:block mt-7 sm:mt-0">
+            <RightCard />
+          </div>
         </div>
       </section>
+
+      <div className="flex items-center justify-center pb-4">
+        <p className="flex text-[16px] items-center space-x-1">
+          <span>crafted with</span>{" "}
+          <span>
+            <Heart
+              size={20}
+              style={{ color: shades[800] }}
+              fill={shades[200]}
+            />
+          </span>{" "}
+          <span>by</span>{" "}
+          <a href="https://twitter.com/0xChirag" target="_blank">
+            @ch1rag
+          </a>
+        </p>
+      </div>
     </main>
   );
 }

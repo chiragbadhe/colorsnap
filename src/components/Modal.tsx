@@ -17,9 +17,9 @@ export default function Modal(props: ModalProps) {
     <>
       {/* Modal overlay */}
       {isOpen && (
-        <div className="fixed inset-0 backdrop-blur-sm bg-white/30  z-50 flex items-center justify-center">
+        <div className="fixed inset-0 backdrop-blur-sm bg-black/50  z-50 flex items-center justify-center">
           {/* Modal content */}
-          <div className="bg-gray-800 rounded-lg p-4 max-w-md w-full backdrop-filter backdrop-blur-lg">
+          <div className="bg-gray-100 rounded-lg p-4 max-w-xl w-full backdrop-filter backdrop-blur-lg">
             <button
               onClick={() => setIsOpen(false)}
               className="absolute top-2 right-2 text-gray-600 hover:text-gray-500 focus:outline-none"
@@ -40,43 +40,42 @@ export default function Modal(props: ModalProps) {
               </svg>
             </button>
             {/* Tab menu */}
-            <div className="flex mb-4 w-full">
+            <div className="flex mb-4 w-full items-center flex justify-center ">
               <button
                 className={`${
-                  activeTab === "Tailwind" ? "bg-gray-700" : "bg-gray-600"
-                } text-white py-1 px-3  focus:outline-none`}
+                  activeTab === "Tailwind" ? "bg-gray-200 " : "bg-gray-300"
+                }  py-1 px-3  focus:outline-none`}
                 onClick={() => setActiveTab("Tailwind")}
               >
                 Tailwind
               </button>
               <button
                 className={`${
-                  activeTab === "SCSS" ? "bg-gray-700" : "bg-gray-600"
-                } text-white py-1 px-3 focus:outline-none`}
+                  activeTab === "SCSS" ? "bg-gray-200" : "bg-gray-300"
+                }  py-1 px-3 focus:outline-none`}
                 onClick={() => setActiveTab("SCSS")}
               >
                 SCSS
               </button>
               <button
                 className={`${
-                  activeTab === "CSS" ? "bg-gray-700" : "bg-gray-600"
-                } text-white py-1 px-3 focus:outline-none`}
+                  activeTab === "CSS" ? "bg-gray-200" : "bg-gray-300"
+                }  py-1 px-3 focus:outline-none`}
                 onClick={() => setActiveTab("CSS")}
               >
                 CSS
               </button>
               <button
                 className={`${
-                  activeTab === "SVG" ? "bg-gray-700" : "bg-gray-600"
-                } text-white py-1 px-3 focus:outline-none`}
+                  activeTab === "SVG" ? "bg-gray-200" : "bg-gray-300"
+                }  py-1 px-3 focus:outline-none`}
                 onClick={() => setActiveTab("SVG")}
               >
                 SVG
               </button>
-
             </div>
             {/* Tab content */}
-            <div className="text-white">
+            <div className="pt-[15px]">
               {activeTab === "Tailwind" && (
                 <div>
                   <Tailwind />

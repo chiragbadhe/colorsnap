@@ -43,8 +43,14 @@ export const hslToHex = (hsl: { h: any; s: number; l: number }) => {
   
     return "#" + r + g + b;
   };
-  
 
+  export function getPerceivedBrightness(color: string) {
+    const r = parseInt(color.substring(1, 3), 16);
+    const g = parseInt(color.substring(3, 5), 16);
+    const b = parseInt(color.substring(5, 7), 16);
+  
+    return Math.sqrt(r * r * 0.299 + g * g * 0.587 + b * b * 0.114);
+  }
 
   export const hexToHSL = (hex: string) => {
     // Convert hex to RGB first
@@ -85,81 +91,6 @@ export const hslToHex = (hsl: { h: any; s: number; l: number }) => {
     l = +(l * 100).toFixed(1);
     return { h, s, l };
   };
-
-
-  export function generateColorShadess(hexCode: string): string[] {
-    const hexToInt = (hex: string) => parseInt(hex, 16);
-    const intToHex = (int: number) => int.toString(16).padStart(2, '0');
-    
-    // Convert the hex code to RGB values
-    const r = hexToInt(hexCode.slice(1, 3));
-    const g = hexToInt(hexCode.slice(3, 5));
-    const b = hexToInt(hexCode.slice(5, 7));
-    
-    // Calculate the increment for each shade based on linear interpolation
-    const incrementR = r / 11;
-    const incrementG = g / 11;
-    const incrementB = b / 11;
-    
-    // Generate the 11 shades using linear interpolation between white (#FFFFFF) and the specified hex code
-    const shades = [];
-    for (let i = 1; i <= 11; i++) {
-      const shadeR = Math.round(255 - (incrementR * i));
-      const shadeG = Math.round(255 - (incrementG * i));
-      const shadeB = Math.round(255 - (incrementB * i));
-      const shadeHex = `#${intToHex(shadeR)}${intToHex(shadeG)}${intToHex(shadeB)}`;
-      shades.push(shadeHex);
-    }
-    
-    return shades;
-  }
-
-  
-import tinycolor from "tinycolor2";
-import namer from "color-namer";
-
-type Shades = {
-  [key: string]: string;
-};
-
-type ColorData = {
-  name: string;
-  shades: Shades;
-}
-
-export function generateColorShades(hex: string): ColorData {
-  const shades = [
-    "50",
-    "100",
-    "200",
-    "300",
-    "400",
-    "500",
-    "600",
-    "700",
-    "800",
-    "900",
-    "950",
-  ];
-
-  const lightestColor = tinycolor(hex).lighten(50).toHexString();
-  const darkestColor = tinycolor(hex).darken(10).toHexString();
-
-  const generatedShades: Shades = {};
-
-  shades.forEach((shade, index) => {
-    const ratio = index / (shades.length - 2);
-    const interpolatedColor = tinycolor.mix(lightestColor, darkestColor, ratio * 100).toHexString();
-    generatedShades[shade] = interpolatedColor;
-  });
-
-  const name = namer(hex).ntc[0].name;
-
-  return {
-    name,
-    shades: generatedShades,
-  };
-}
 
 
 

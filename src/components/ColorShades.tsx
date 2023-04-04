@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ColorShadesProps {
   baseColor: string;
@@ -32,7 +32,10 @@ const ColorShades: React.FC<ColorShadesProps> = ({ baseColor }) => {
   return (
     <div>
       {shades.map((shade, index) => (
-        <div key={index} style={{ backgroundColor: shade, height: '50px', width: '50px' }} />
+        <div
+          key={index}
+          style={{ backgroundColor: shade, height: "50px", width: "50px" }}
+        />
       ))}
     </div>
   );

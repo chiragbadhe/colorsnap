@@ -1,6 +1,6 @@
 
 import { create } from "zustand";
-import { generateColorShades } from "@/lib/utils";
+import { generateColorShades } from "@/lib/generateColorShades";
 
 type ColorState = {
   name: string;

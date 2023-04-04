@@ -32,7 +32,10 @@ export default function Tailwind({}: Props) {
         </pre>
 
         <div>
-          <button className="bg-gray-700 text-sm rounded p-2" onClick={handleCopy}>
+          <button
+            className="bg-gray-300 text-sm rounded p-2"
+            onClick={handleCopy}
+          >
             {copied ? "Copied!" : "Copy"}
           </button>
         </div>

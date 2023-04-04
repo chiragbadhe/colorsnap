@@ -9,7 +9,9 @@ function RightCard({}: Props) {
   const { shades } = useColorStore();
   return (
     <div
-      style={{ backgroundColor: shades[300] }}
+      style={{
+        backgroundImage: `linear-gradient(150deg, ${shades[600]}, ${shades[300]})`,
+      }}
       className="border bg-cyan-300 bg-opacity-40 rounded-[10px] h-[450px] overflow-hidden"
     >
       <div className=" flex items-center justify-center h-full flex flex-col space-y-[20px] ">

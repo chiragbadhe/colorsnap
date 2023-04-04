@@ -39,7 +39,7 @@ export default function Scss({}: Props) {
 
         <div>
           <button
-            className="bg-gray-700 text-sm rounded p-2"
+            className="bg-gray-300 text-sm rounded p-2"
             onClick={handleCopy}
           >
             {copied ? "Copied!" : "Copy"}
