@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import Tailwind from "./ModalTab/Tailwind";
+import Scss from "./ModalTab/Scss";
+import Css from "./ModalTab/Css";
+import Svg from "./ModalTab/Svg";
 
 interface ModalProps {
   isOpen: boolean;
@@ -54,19 +57,44 @@ export default function Modal(props: ModalProps) {
               >
                 SCSS
               </button>
+              <button
+                className={`${
+                  activeTab === "CSS" ? "bg-gray-700" : "bg-gray-600"
+                } text-white py-1 px-3 focus:outline-none`}
+                onClick={() => setActiveTab("CSS")}
+              >
+                CSS
+              </button>
+              <button
+                className={`${
+                  activeTab === "SVG" ? "bg-gray-700" : "bg-gray-600"
+                } text-white py-1 px-3 focus:outline-none`}
+                onClick={() => setActiveTab("SVG")}
+              >
+                SVG
+              </button>
+
             </div>
             {/* Tab content */}
             <div className="text-white">
               {activeTab === "Tailwind" && (
                 <div>
-                  <h2 className="text-lg font-bold mb-2">Tailwind</h2>
                   <Tailwind />
                 </div>
               )}
               {activeTab === "SCSS" && (
                 <div>
-                  <h2 className="text-lg font-bold mb-2">SCSS</h2>
-                  <p>SCSS content goes here</p>
+                  <Scss />
+                </div>
+              )}
+              {activeTab === "CSS" && (
+                <div>
+                  <Css />
+                </div>
+              )}
+              {activeTab === "SVG" && (
+                <div>
+                  <Svg />
                 </div>
               )}
             </div>
