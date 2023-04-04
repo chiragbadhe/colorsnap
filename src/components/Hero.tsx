@@ -7,7 +7,7 @@ import Modal from "@/components/Modal";
 
 import { useColorStore } from "@/lib/useColorStore";
 import RightCard from "./Cards/RightCard";
-import LeftCard from "./Cards/RightCard";
+import LeftCard from "./Cards/leftCard";
 import CenterCard from "./Cards/CenterCard";
 import { Heart } from "lucide-react";
 
