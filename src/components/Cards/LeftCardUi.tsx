@@ -3,7 +3,7 @@ import React from "react";
 
 type Props = {};
 
-function LeftCard({}: Props) {
+function LeftCardUi({}: Props) {
   const { shades } = useColorStore();
 
   return (
@@ -58,4 +58,4 @@ function LeftCard({}: Props) {
   );
 }
 
-export default LeftCard;
+export default LeftCardUi;

@@ -7,7 +7,7 @@ import Modal from "@/components/Modal";
 
 import { useColorStore } from "@/lib/useColorStore";
 import RightCard from "./Cards/RightCard";
-import LeftCard from "./Cards/leftCard";
+import LeftCardUi from "./Cards/LeftCardUi";
 import CenterCard from "./Cards/CenterCard";
 import { Heart } from "lucide-react";
 
@@ -216,7 +216,7 @@ function Hero({}: Props) {
       <section className="py-11 sm:px-11">
         <div className="sm:grid grid-cols-4 gap-5 ">
           <div className="hidden xl:block">
-            <LeftCard />
+            <LeftCardUi />
           </div>
           <div className="sm:block xl:col-span-2 md:col-span-4 md:h-[450px] overflow-hidden rounded-[10px] border">
             <CenterCard />
