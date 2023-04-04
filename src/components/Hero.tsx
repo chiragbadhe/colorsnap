@@ -17,11 +17,17 @@ type Props = {};
 function Hero({}: Props) {
   const [color, setColor] = useState("#3498a6");
   const [hsl, setHSL] = useState({ h: 0, s: 0, l: 0 });
-  const [shade, setShade] = useState(generateColorShades("#3498a6"));
-
+  const { name, shades, generateColors } = useColorStore();
   const [isOpen, setIsOpen] = useState(false);
 
-  useColorStore((state) => ({ ...state, shade }));
+  useEffect(() => {
+    // Set the random color to Zustand when the component mounts
+    const newColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+    setColor(newColor);
+    const hslColor = hexToHSL(newColor);
+    setHSL(hslColor);
+    generateColors(newColor);
+  }, [generateColors]);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -32,21 +38,19 @@ function Hero({}: Props) {
         setColor(newColor);
         const hslColor = hexToHSL(newColor);
         setHSL(hslColor);
-        const newShades = generateColorShades(newColor);
-        setShade(newShades);
+        generateColors(newColor);
       }
     };
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, []);
+  }, [generateColors]);
 
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newColor = e.target.value;
     setColor(newColor);
     const hslColor = hexToHSL(newColor);
     setHSL(hslColor);
-    const newShades = generateColorShades(newColor);
-    setShade(newShades);
+    generateColors(newColor);
   };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,8 +59,7 @@ function Hero({}: Props) {
       setColor(newColor);
       const hslColor = hexToHSL(newColor);
       setHSL(hslColor);
-      const newShades = generateColorShades(newColor);
-      setShade(newShades);
+      generateColors(newColor);
     } else {
       setHSL({ ...hsl, [e.target.id]: parseInt(e.target.value) });
       const hexColor = hslToHex({
@@ -166,7 +169,7 @@ function Hero({}: Props) {
 
       <section className="px-11 py-11 border-b">
         <div className="flex justify-between">
-          <p>{shade.name.toLowerCase()}</p>
+          <p>{name.toLowerCase()}</p>
           <div className="flex">
             <button onClick={() => setIsOpen(true)}>export</button>
             <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -174,7 +177,7 @@ function Hero({}: Props) {
         </div>
 
         <div className="flex justify-center grid sm:grid-cols-11 grid-rows-11 gap-3 mt-5">
-          {Object.values(shade.shades).map((shadeValue, index) => {
+          {Object.values(shades).map((shadeValue, index) => {
             const hex = `${shadeValue}`;
 
             return (

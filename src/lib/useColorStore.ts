@@ -1,48 +1,24 @@
 
-import {create} from "zustand";
+import { create } from "zustand";
+import { generateColorShades } from "@/lib/utils";
 
 type ColorState = {
-  colorData: ColorData | null;
-  setColorData: (colorData: ColorData) => void;
+  name: string;
+  shades: Shades;
+  generateColors: (hex: string) => void;
 };
 
 type Shades = {
-    [key: string]: string;
-  };
-  
-  type ColorData = {
-    name: string;
-    shades: Shades;
-  }
-  
+  [key: string]: string;
+};
 
-export const useColorStore = create<ColorState>((set) => ({
-  colorData: null,
-  setColorData: (colorData) => set({ colorData }),
+const useColorStore = create<ColorState>((set) => ({
+  name: "",
+  shades: {},
+  generateColors: (hex) => {
+    const colorData = generateColorShades(hex);
+    set({ name: colorData.name, shades: colorData.shades });
+  },
 }));
 
-
-
-// import { create } from "zustand";
-// import { generateColorShades } from "./generateColorShades";
-
-// type ColorState = {
-//   name: string;
-//   shades: Shades;
-//   generateColors: (hex: string) => void;
-// };
-
-// type Shades = {
-//   [key: string]: string;
-// };
-
-// const useColorStore = create<ColorState>((set) => ({
-//   name: "",
-//   shades: {},
-//   generateColors: (hex) => {
-//     const colorData = generateColorShades(hex);
-//     set({ name: colorData.name, shades: colorData.shades });
-//   },
-// }));
-
-// export { useColorStore };
+export { useColorStore };
