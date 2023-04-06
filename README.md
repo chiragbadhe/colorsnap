@@ -26,7 +26,7 @@ ColorSnap is a color shade generator that allows you to generate shades from lig
 
 ## How to run locally
 
-1. Clone the repository: `git clone https://github.com/{username}/colorsnap.git`
+1. Clone the repository: `git clone https://github.com/chiragbadhe/colorsnap.git`
 2. Navigate to the project directory: `cd colorsnap`
 3. Install dependencies: `yarn install`
 4. Start the development server: `yarn dev`
@@ -34,7 +34,7 @@ ColorSnap is a color shade generator that allows you to generate shades from lig
 
 ## Credits
 
-ColorSnap was created by [Your Name] and is licensed under the MIT License. 
+ColorSnap was created by ch1rag.eth 
 
 - [NextJs](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
